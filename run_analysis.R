@@ -3,15 +3,15 @@ library(dplyr)
 #Merges the training and the test sets to create one data set.
 
 
-subject_train <- read.table("C:/R/getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/train/subject_train.txt")
-subject_test <- read.table("C:/R/getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/test/subject_test.txt")
+subject_train <- read.table("subject_train.txt")
+subject_test <- read.table("subject_test.txt")
 
-X_test <- read.table("C:/R/getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/test/X_test.txt")
-X_train <- read.table("C:/R/getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/train/X_train.txt")
+X_test <- read.table("X_test.txt")
+X_train <- read.table("X_train.txt")
 
 
-y_train <- read.table("C:/R/getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/train/y_train.txt")
-y_test <- read.table("C:/R/getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/test/y_test.txt")
+y_train <- read.table("y_train.txt")
+y_test <- read.table("y_test.txt")
 
 subject_all<- rbind(subject_train,subject_test)
 X_all<- rbind(X_train,X_test)
@@ -19,14 +19,14 @@ y_all<- rbind(y_train,y_test)
 
 #Extracts only the measurements on the mean and standard deviation for each measurement. 
 
-featureNames <- read.table("C:/R/getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/features.txt")
+featureNames <- read.table("features.txt")
 
 featuresToKeep <- grepl("mean|std", featureNames$V2)
 subset_X_all <- X_all[, featuresToKeep]
 
 #Uses descriptive activity names to name the activities in the data set
 
-activityLabels <- read.table("C:/R/getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/activity_labels.txt")
+activityLabels <- read.table("activity_labels.txt")
 colnames(activityLabels) <- c("activityId", "activityLabel")
 colnames(subject_all)<-c("Subject")
 colnames(y_all)<-c("Activity")
@@ -43,4 +43,4 @@ tidyDataSetMeans <- tidyDataSet %>%
   
   summarise_all(funs(mean))
 
-write.table(tidyDataSetMeans, "C:/R/getdata_projectfiles_UCI HAR Dataset/UCI HAR Dataset/tidy_data.txt", row.names = FALSE, quote = FALSE)
+write.table(tidyDataSetMeans, "tidy_data.txt", row.names = FALSE, quote = FALSE)
